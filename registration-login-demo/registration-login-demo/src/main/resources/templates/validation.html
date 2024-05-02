@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Registration Form</title>
+
+    <script>
+        function validateForm(){
+           var accountNumber = document.getElementById("accountNumber").value;
+           var confirmAccountNumber = document.getElementById("confirmAccountNumber").value;
+
+           // Check if username and passwords are not empty
+           if (accountNumber == confirmAccountNumber){
+               // Enable submit button
+               document.getElementById("submitBtn").disabled = false;
+           }else{
+              // Disable submit button
+              document.getElementById("submitBtn").disabled = true;
+           }
+        }
+    </script>
+</head>
+<body>
+
+<h1>Registration Form</h1>
+<form action="/register" method="post">
+    <div>
+        <label>Username:</label>
+        <input type="text" id="accountNumber" name="accountNumber" onkeyup="validateForm()" required>
+    </div>
+
+    <div>
+        <label>Password:</label>
+        <input type="text" id="confirmAccountNumber" name="confirmAccountNumber" onkeyup="validateForm()" required>
+    </div>
+
+    <button type="submit" id="submitBtn" disabled>Register</button>
+</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<!--function checkAccountNumberMatch(){
+            var accountNumber = document.getElementById("accountNumber").value;
+            var confirmAccountNumber = document.getElementById("confirmAccountNumber").value;
+
+            if(accountNumber != confirmAccountNumber){
+                 document.getElementById("confirmAccountNumberError").innerHTML = "Account numbers do not match";
+                 }else{
+                     document.getElementById("confirmAccountNumberError").innerHTML = "Account number match successfully";
+                 }
+            }-->
+
+<!--function validateForm(){
+alert("Submit Success");
+location.replace(location.href);
+}-->

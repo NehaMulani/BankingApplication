@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome - Banking App</title>
+    <style>
+        /*Main Body*/
+        *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+        body{
+        font-family: Book Antiqua;
+        background-color: #f2f2f2;
+        }
+
+        /*Heading*/
+        h1{
+        background-color: #1a237e;
+        color: #fff;
+        padding: 15px 0;
+        text-align: center;
+        }
+
+        /*Animated Text*/
+        .animated-text{
+        font-size: 34px;
+        font-weight: 600;
+        min-width: 280px;
+        }
+        .animated-text span{
+        position: relative;
+        }
+        .animated-text span::before{
+        content: "Welcome To The Bank";
+        color: black;
+        }
+        .animated-text span::after{
+        content: "";
+        position: absolute;
+        width: calc(100% + 8px);
+        height: 100%;
+        background-color: #f2f2f2;
+        border-left: 2px solid #ffffff;
+        right: -8px;
+        animation: cursor .8s infinite, typing 20s steps(14) infinite;
+        }
+        @keyframes cursor{
+        to{
+        border-left: 2px solid #ff7f5000;
+        }
+        }
+        @keyframes words{
+        0%,20%{
+        content: "Welcome To The Bank";
+        }
+        }
+        @keyframes typing{
+        10%,15%,30%,35%,50%,55%,75%,90%,95%{
+        width: 0;
+        }
+        5%z,20%,25%,40%,45%,60%,65%,80%,85%{
+        width: calc(100% + 8px);
+        }
+        }
+
+        /*Navigation*/
+        ul {
+        list-style-type: none;
+        margin: 25px;
+        }
+        a{
+        text-decoration: none;
+        color: white;
+        margin: 2px;
+        padding: 10px;
+        border: 3px solid;
+        border-radius: 50px;
+        cursor: pointer;
+        background-color: deepskyblue;
+        font-size: 15px;
+        }
+        a:hover{
+        background-color: #0056b3;
+        }
+        li {
+        display: inline;
+        }
+        button{
+        background-color: #007BFF;
+        color: #fff;
+        margin: 5px;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 40px;
+        margin-top: 30px;
+        width: 100px;
+        }
+        button:hover{
+        background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<!--Heading-->
+<div>
+    <h1>Banking Application</h1>
+    <a style="float: left;" href="/home">Home</a>
+    <form th:action="@{/logout}" method="post">
+        <p style="float: right; margin-right: 140px; margin-top: -40px; color: white;">
+            Welcome: <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+        </p>
+        <button style="float: right; margin-top: -50px;margin-right: 15px;" type="submit">Sign Out</button>
+    </form>
+</div>
+<!--End Of Heading-->
+
+<!--Navigation-->
+<div class="nav" style="display: flex; justify-content: right;">
+    <ul>
+        <li><a href="account_register">New Account</a></li>
+        <li><a href="available_accounts">List of Accounts</a></li>
+        <!--<li><a href="deposits">Deposit</a></li>
+        <li><a href="withdraw">Withdraw</a></li>
+        <li><a href="account_statement">All Transaction</a></li>-->
+        <li><a href="view_transactions">View Transactions</a></li>
+    </ul>
+</div>
+<!--End Of Navigation-->
+
+<!--Animated Text-->
+<div class="animated-text">
+    <h2 style="margin-top: 200px; text-align: center; font-size: 35px;"><span></span></h2>
+    <b style="/*text-align: center;*/ margin-left: 550px;">[[${#request.userPrincipal.principal.fullName}]]</b>
+</div>
+<!--End Of Animated Text-->
+
+</body>
+</html>

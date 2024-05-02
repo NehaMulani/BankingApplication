@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome - Banking App</title>
+    <style>
+
+        /*Main Body*/
+        *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+        body{
+        font-family: Book Antiqua;
+        background-color: #f2f2f2;
+        }
+
+        /* Heading*/
+        h1{
+        background-color: #1a237e;
+        color: #fff;
+        padding: 15px 0;
+        text-align: center;
+        }
+
+        /*Navigation*/
+        ul {
+        list-style-type: none;
+        margin: 25px;
+        }
+        a{
+        text-decoration: none;
+        color: white;
+        margin: 2px;
+        padding: 10px;
+        border: 3px solid;
+        border-radius: 50px;
+        cursor: pointer;
+        background-color: deepskyblue;
+        font-size: 15px;
+        }
+        a:hover{
+        background-color: #0056b3;
+        }
+        li {
+        display: inline;
+        }
+        .nav{
+        display: flex;
+        justify-content: right;
+        }
+
+       /*New Account Form*/
+       .container{
+        width: 80%;
+        height: 400px;
+        padding: 10px;
+        background-color: white;
+        border-radius: 10px;
+        margin-left: 132px;
+        margin-top: 40px;
+        }
+        label{
+        font-size: 20px;
+        }
+
+        button{
+        background-color: #007BFF;
+        color: #fff;
+        margin: 5px;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 40px;
+        margin-top: 30px;
+        width: 100px;
+        }
+        button:hover{
+        background-color: #0056b3;
+        }
+
+        button:disabled,
+        button[disabled]{
+        background-color: #cccccc;
+        color: #666666;
+}
+    </style>
+
+    <script>
+
+        function validateForm(){
+           var accountNumber = document.getElementById("accountNumber").value;
+           var confirmAccountNumber = document.getElementById("confirmAccountNumber").value;
+
+           // Check account number and confirm account number
+           if(accountNumber != confirmAccountNumber){
+                 document.getElementById("confirmAccountNumberError").innerHTML = "Account numbers do not match";
+                 }else{
+                     document.getElementById("confirmAccountNumberError").innerHTML = "Account number match successfully";
+                 }
+
+           // Check fields are not empty
+           if (accountNumber == confirmAccountNumber){
+               // Enable submit button
+               document.getElementById("submitBtn").disabled = false;
+           }else{
+              // Disable submit button
+              document.getElementById("submitBtn").disabled = true;
+           }
+        }
+    </script>
+</head>
+<body>
+
+<!--Heading-->
+<div>
+
+    <h1>Banking Application</h1>
+
+    <a style="float: left;" href="/home">Home</a>
+
+    <form th:action="@{/logout}" method="post">
+        <p style="float: right; margin-right: 160px; margin-top: -50px; color: white;">
+            Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+        </p>
+        <button style="float: right; margin-top: -50px;margin-right: 15px;" type="submit">Sign Out</button>
+    </form>
+
+</div>
+<!--End Of Heading-->
+
+<!--Navigation-->
+<div class="nav">
+
+    <ul>
+        <li><a href="account_register">New Account</a></li>
+        <li><a href="available_accounts">List of Accounts</a></li>
+
+        <!-- <li><a href="deposits">Deposit</a></li>
+              <li><a href="withdraw">Withdraw</a></li>
+               <li><a href="account_statement">All Transaction</a></li>-->
+        <!--<li><a href="#">Delete Account</a></li>-->
+    </ul>
+
+</div>
+<!--End Of Navigation-->
+
+<!--Container-->
+<div class="container">
+
+    <!--New Account Form-->
+    <form th:action="@{/save}" th:object="${account}" method="post" onsubmit="return validateForm()">
+        <!--Form Heading-->
+        <h2 style="text-align: center; margin: 30px;">Create New Account</h2>
+        <!--End of Form Heading-->
+
+        <!--Container1-->
+        <div id="container1" style="display:flex; margin-left: 60px; margin-top: 50px;">
+
+            <!--Account number field-->
+            <div id="formAccountNo">
+                <label for="accountNumber">Choose Account Number:</label>
+                <!--<input type="text" id="accountNumber" name="accountNumber" autofocus onkeyup="checkAccountNumberMatch()" required style="padding: 8px; width: 215px; margin-left: 15px;">-->
+                <select name="accountNumber" onkeyup="validateForm()" id="accountNumber" style="padding: 8px; width: 215px; margin-left: 15px;">
+                    <option value="disabled selected hidden">---Select---</option>
+                    <option th:each="i : ${#numbers.sequence(1000, 9000)}" th:value="${i}" th:text="${i}"></option>
+                </select>
+            </div>
+            <!--End of Account number field-->
+
+            <!--Confirm Account number field-->
+            <div id="formConfirmAccountNo" style="margin-left: 60px;">
+                <label for="confirmAccountNumber">Confirm Account Number:</label>
+
+                <input type="text" id="confirmAccountNumber" name="confirmAccountNumber" onkeyup="validateForm()" autofocus required style="padding: 8px; width: 215px; margin-left: 15px;"><br>
+                <span id="confirmAccountNumberError" style="color: red;"></span><br>
+
+                <!--<select name="confirmAccountNo" id="confirmAccountNo" style="padding: 8px; width: 215px; margin-left: 15px;">
+                       <option value="disabled selected hidden">-&#45;&#45;Select-&#45;&#45;</option>
+                       <option th:each="i : ${#numbers.sequence(1000, 9000)}" th:value="${i}" th:text="${i}"></option>
+                   </select>-->
+            </div>
+            <!--End of Confirm Account number field-->
+        </div>
+        <!--End of Container1-->
+
+        <!--Container2-->
+        <div id="container2" style="display:flex; margin-left: 60px; margin-top: 30px;}">
+
+            <!--Currency Field-->
+            <div id="formCurrency">
+                <label for="currency">Currency:</label>
+                <select name="currency" id="currency" required style="padding: 8px; width: 215px; margin-left: 145px;">
+                    <option value="">---Select---</option>
+                    <option value="inr">INR</option>
+                    <option value="japaneseYen">Japanese Yen</option>
+                    <option value="dollar">Dollar</option>
+                    <option value="euro">Euro</option>
+                </select>
+            </div>
+            <!--End of Currency field-->
+
+            <!--Account type field-->
+            <div id="formAccountType" style="margin-left: 50px;">
+                <label for="accountType">Account Type:</label>
+                <select name="accountType" id="accountType" required style="padding: 8px; width: 215px; margin-left: 121px;">
+                    <option value="disabled selected hidden">---Select---</option>
+                    <option value="saving">Saving</option>
+                    <option value="current">Current</option>
+                    <option value="salaryAccount">Salary Account</option>
+                    <option value="pensionersSavingsBankAccount">Pensioners savings bank account</option>
+                </select>
+            </div>
+            <!--End of Account type field-->
+
+        </div>
+        <!--End of Container2-->
+
+        <!--Buttons-->
+        <button type="submit" id="submitBtn" disabled>Submit</button>
+        <button type="reset">Clear</button>
+        <!--End of Buttons-->
+
+    </form>
+    <!-- End Of New Account Form-->
+
+</div>
+<!-- End Of Container-->
+
+</body>
+</html>
+
+

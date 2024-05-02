@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Statement</title>
+
+   <!-- <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>-->
+    <style>
+        /*Main Body*/
+        *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+        body{
+        font-family: Book Antiqua;
+        background-color: #f2f2f2;
+        }
+
+        /*Heading*/
+        h1{
+        background-color: #1a237e;
+        color: #fff;
+        padding: 15px 0;
+        text-align: center;
+        }
+
+        /*Navigation*/
+        /*ul {
+        list-style-type: none;
+        margin: 25px;
+        }*/
+        a{
+        text-decoration: none;
+        color: white;
+        margin: 2px;
+        padding: 10px;
+        border: 3px solid;
+        border-radius: 50px;
+        cursor: pointer;
+        background-color: deepskyblue;
+        font-size: 15px;
+        }
+        a:hover{
+        background-color: #0056b3;
+        }
+        /*li {
+        display: inline;
+        }
+        .nav{
+        display: flex;
+        justify-content: right;
+        }*/
+
+        /*Account Statement Form*/
+       .container{
+        width: 60%;
+        height: 400px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        margin-left: 265px;
+        margin-top: 70px;
+        }
+        label{
+        font-size: 20px;
+        margin-left: 30px;
+        }
+
+        button{
+        background-color: #007BFF;
+        color: #fff;
+        margin: 25px;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100px;
+        }
+        button:hover{
+        background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<!--Heading-->
+<div>
+    <h1>Banking Application</h1>
+    <a style="float: left;" href="/home">Home</a>
+    <form th:action="@{/logout}" method="post">
+        <p style="float: right; margin-right: 140px; margin-top: -40px; color: white;">
+            Welcome: <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+        </p>
+        <button style="float: right; margin-top: -50px;margin-right: 15px;" type="submit">Log Out</button>
+    </form>
+</div>
+
+<!--Navigation-->
+<!--<div class="nav">
+    <ul>
+        <li><a href="account_register">New Account</a></li>
+        <li><a href="available_accounts">List of Accounts</a></li>
+        <li><a href="deposits">Deposit</a></li>
+        <li><a href="withdraw">Withdraw</a></li>
+        <li><a href="account_statement">All Transaction</a></li>
+        <li><a href="#">Delete Account</a></li>
+    </ul>
+</div>-->
+<!--End Of Navigation-->
+
+<!--Account Statement Form-->
+<div class="container">
+
+<!--Heading-->
+    <div>
+        <h2 style="text-align: center; margin-top: 20px;">Account Statement</h2>
+    </div>
+<!--End Of Heading-->
+
+<!--Account Statement Form-->
+    <form th:action="@{/go}" th:object="${account}" method="post">
+
+        <div id="container1" style="margin-top: 50px;">
+            <label for="accountNumber">Account Number:</label>
+            <input th:value="${account.accountNumber}" name="accountNumber" id="accountNumber" style="padding: 8px; width: 215px; margin-left: 40px;">
+        </div>
+
+        <div id="container2" style="margin-top: 50px;">
+            <label for="fromDate">From Date:</label>
+            <input th:value="${account.fromDate}" type="date" name="fromDate" id="fromDate" style="padding: 8px; width: 215px; margin-left: 40px;">
+        </div>
+
+        <div id="container3" style="margin-top: 50px;">
+            <label for="toDate">To Date:</label>
+            <input th:value="${account.toDate}" type="date" name="toDate" id="toDate" style="padding: 8px; width: 215px; margin-left: 40px;">
+        </div>
+        <button type="submit">Go</button>
+        <button type="reset">Clear</button>
+        </form>
+</div>
+<!--End Of Account Statement Form-->
+
+</body>
+</html>
